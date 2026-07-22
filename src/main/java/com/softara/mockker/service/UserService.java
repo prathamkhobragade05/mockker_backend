@@ -7,12 +7,11 @@ import java.util.Optional;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.softara.mockker.model.*;
 import com.softara.mockker.repository.*;
-
-
 
 @Service
 public class UserService {
@@ -36,6 +35,8 @@ public class UserService {
 	@Autowired
 	ActivitiesRepository activityRepo;
 	
+	public final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	
 	public UserModel registerUser(UserModel request) {
 		String timeStamp = new Timestamp(System.currentTimeMillis()).toString();
 		
@@ -44,7 +45,7 @@ public class UserService {
 	    request.setCreatedAt(timeStamp);
 	    request.setUpdatedAt(timeStamp);
 	    //--------encode password
-	    //request.setPassword(passwordEncoder.encode(request.getPassword()));
+	    request.setPassword(passwordEncoder.encode(request.getPassword()));
 	    
 	    return userRepo.save(request);
 	}
@@ -112,12 +113,5 @@ public class UserService {
 	public List<TestResultModel> getResultsByUserId(Long userId) {
 		return resultRepo.findByUserId(userId);
 	}
-
-	
-
-	
-	
-	
-	
 
 }

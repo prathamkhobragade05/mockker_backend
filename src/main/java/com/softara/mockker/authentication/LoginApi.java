@@ -50,11 +50,12 @@ public class LoginApi {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	                .body("User not found!");
 	    }
-
-	    if (!user.getPassword().equals(request.getPassword())) {
+	    
+	    
+	    if (!userService.passwordEncoder.matches(request.getPassword(), user.getPassword())) {
 	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
 	                .body("Incorrect password");
-	    } 
+        }
 	    
 	    String token= jwtService.generateToken(user.getEmail());
 	    

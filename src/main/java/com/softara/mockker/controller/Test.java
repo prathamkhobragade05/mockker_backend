@@ -11,6 +11,7 @@ public class Test {
 	 
 	@GetMapping("/test")
 	public String getOverviewCount(){	
+		System.out.println("online!");
 		return "tested - online!";
 	}  
 }

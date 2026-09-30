@@ -57,6 +57,7 @@ public class EmailService {
 
     	} 
     	catch (Exception e) {
+			System.out.println("-------"+e);
     		return ResponseEntity.status(500).body("Internal Server Error");
     	}
     	
